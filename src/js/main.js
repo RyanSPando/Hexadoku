@@ -1,17 +1,13 @@
 $(document).on('ready', function() {
-  console.log('sanity check!');
-
-
+  console.log('main.css!');
 
   //=========Create Game Board=========
   for (let i = 0; i < 256; i++) {
     $('#game-board' ).append('<input type="text" name="' + i + '" value=""  class="game-cell" maxlength="1">');
   }
 
-  //=========Make inner 8 x 8 grids for puzzle=========
-  let $allGameCells = $('#game-board .game-cell');
-
-  $allGameCells.each(function(index, value) {
+  //=========Make inner 8 x 8 grids for puzzle=========;
+  $('#game-board .game-cell').each(function(index, value) {
     index += 1;
 
     if (index % 4 === 0) { //Right borders.
@@ -38,23 +34,4 @@ $(document).on('ready', function() {
 
   $('#button-board .game-inputs').wrapAll('<div class="btn-group" role="group"></div>')
 
-
-  //=========Listeners=========
-
-  $allGameCells.on('keypress', function(event) {//prevents all characters other than hexadecimal characters from being placed in boxes and changes all inputs to upper case.  Fear the dreaded regex!  *Refactor with only charcodes?
-
-    if(null !== String.fromCharCode(event.which).match(/[g-z]/g) || null !== String.fromCharCode(event.which).match(/[G-Z]/g)) {
-        event.preventDefault();
-    }
-    else if(null !== String.fromCharCode(event.which).match(/[a-f]/g)) {
-        event.preventDefault();
-        $(this).val($(this).val() + String.fromCharCode(event.which).toUpperCase());
-    }
-  });
-
-  //On button press puts text value of button on selected game board
-  $('#button-board .game-inputs').on('mousedown', function(event) {
-    event.preventDefault();
-    $(':focus').val($(this)[0].textContent);
-  });
 });

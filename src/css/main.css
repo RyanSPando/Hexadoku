@@ -5,13 +5,13 @@
   border-collapse: collapse;
   font-family: Calibri, sans-serif;
   margin-left: 30px;
+  margin: 0 auto;
 }
 
 #button-board{
   margin-top: 20px;
   margin-bottom: 20px;
 }
-
 
 .game-cell{
   color: blue;
