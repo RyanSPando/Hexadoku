@@ -1,24 +1,22 @@
-/* add custom styles */
+/* Game board Style */
 
 #game-board{
   margin-left:auto;
   margin-right:auto;
   width:432px;
+  border-collapse: collapse;
+  font-family: Calibri, sans-serif;
 }
+
 
 .game-cell{
   color: blue;
-  border: 1px solid black;
   width: 26px;
   height: 26px;
   text-align: center;
   font-size: 2.5rem;
   line-height: 26px;
-}
-
-.hex-square{
-  width: 108px;
-  height: 108px;
-  border: 1px solid blue;
   float: left;
+  border-collapse: collapse;
+  border: 1px solid grey;
 }
