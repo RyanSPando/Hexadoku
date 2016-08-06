@@ -20,8 +20,6 @@ var puzzleSeed =
     [0,	'E', 7, 'C', 4,	'F', 8, 'B', 'D',	1, 2, 9, 5,	6, 'A', 3]
   ];
 
-console.log(randomizeHexadoku(puzzleSeed, boxHeight, boxWidth));
-
 //=====================Start functions=====================
 function randomizeHexadoku(puzzle, gridConstraintHeight, gridConstraintWidth, shiftCount) {
   shiftCount = shiftCount || 7;
