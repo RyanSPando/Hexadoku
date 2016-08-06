@@ -1,26 +1,50 @@
 /* Game board Style */
 
-#game-board{
-  width:432px;
-  border-collapse: collapse;
-  font-family: Calibri, sans-serif;
-  margin-left: 30px;
-  margin: 0 auto;
+@media (min-width: 360px) {
+  #game-board{
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Calibri, sans-serif;
+    /*margin-left: 30px;*/
+    margin: 0 auto;
+    position: relative;
+    font-size: 1.8rem;
+  }
+}
+
+@media (min-width: 540px) {
+  #game-board{
+    width: 70%;
+    border-collapse: collapse;
+    font-family: Calibri, sans-serif;
+    /*margin-left: 30px;*/
+    margin: 0 auto;
+    position: relative;
+    font-size: 2.2rem;
+  }
+}
+@media (min-width: 960px) {
+    #game-board{
+    width: 50%;
+    border-collapse: collapse;
+    font-family: Calibri, sans-serif;
+    /*margin-left: 30px;*/
+    margin: 0 auto;
+    position: relative;
+    font-size: 2.5rem;
+  }
 }
 
 #button-board{
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .game-cell{
   color: blue;
-  width: 26px;
-  height: 26px;
+  width: 6%;
   text-align: center;
-  font-size: 2.5rem;
-  line-height: 26px;
   float: left;
   border-collapse: collapse;
-  border: 1px solid grey;
+  border: 1px solid gray;
 }

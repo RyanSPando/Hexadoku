@@ -1,6 +1,6 @@
-const boxHeight = 4;
-const boxWidth = 4;
-const puzzleSeed =
+var boxHeight = 4;
+var boxWidth = 4;
+var puzzleSeed =
   [
     ['B',	5, 'E', 'F', 8,	4, 'C', 9, 1,	0, 3, 6, 'A',	7, 2, 'D'],
     [4,	7, 2, 6, 'A',	1, 5, 'D', 'B',	8, 9, 'C', 3,	'E', 0, 'F'],
@@ -17,16 +17,15 @@ const puzzleSeed =
     [3,	'F', 6, 'A', 2,	5, 'E', 1, 4,	7, 'B', 0, 'D',	9, 'C', 8],
     [9,	'D', 5, 8, 'C',	6, 7, 0, 'F',	3, 'E', 'A', 4,	2, 1, 'B'],
     [1,	2, 4, 'B', 9,	'D', 'A', 3, 'C',	5, 6, 8, 0,	'F', 7, 'E'],
-    [0,	'E', 7, 'C', 4,	'F', 8, 'B', 'D',	1, 2, 9, 5,	6, 'A', 3],
+    [0,	'E', 7, 'C', 4,	'F', 8, 'B', 'D',	1, 2, 9, 5,	6, 'A', 3]
   ];
 
 console.log(randomizeHexadoku(puzzleSeed, boxHeight, boxWidth));
 
-
 //=====================Start functions=====================
 function randomizeHexadoku(puzzle, gridConstraintHeight, gridConstraintWidth, shiftCount) {
   shiftCount = shiftCount || 7;
-  for (let i = 0; i < shiftCount; i++) {
+  for (var i = 0; i < shiftCount; i++) {
     puzzle = shiftColumn(puzzle, gridConstraintHeight);
     puzzle = shiftRow(puzzle, gridConstraintWidth);
   }
@@ -34,12 +33,12 @@ function randomizeHexadoku(puzzle, gridConstraintHeight, gridConstraintWidth, sh
 }
 
 function shiftColumn(puzzle, boxHeight) {//shift columns on the puzzle randomly constrained by the inner grid size.
-  let twoRandoms = returnTwoRandoms(boxHeight);
-  const rowHeight = boxHeight * boxHeight;
+  var twoRandoms = returnTwoRandoms(boxHeight);
+  var rowHeight = boxHeight * boxHeight;
 
-  for (let j = 0; j < rowHeight; j += boxHeight) {
-    for (let i = 0; i < rowHeight; i++) {
-      let temp = puzzle[i][j + twoRandoms[0]];
+  for (var j = 0; j < rowHeight; j += boxHeight) {
+    for (var i = 0; i < rowHeight; i++) {
+      var temp = puzzle[i][j + twoRandoms[0]];
       puzzle[i][j + twoRandoms[0]] = puzzle[i][j + twoRandoms[1]];
       puzzle[i][j + twoRandoms[1]] = temp;
     }
@@ -48,20 +47,20 @@ function shiftColumn(puzzle, boxHeight) {//shift columns on the puzzle randomly 
 }
 
 function shiftRow(puzzle, boxWidth) {//shift rows on the puzzle randomly constrained by the inner grid size.
-  let twoRandoms = returnTwoRandoms(boxWidth);
-  for (let i = 0; i < boxWidth * boxWidth; i += boxWidth) {
-    let temp = puzzle[i + twoRandoms[0]];
+  var twoRandoms = returnTwoRandoms(boxWidth);
+  for (var i = 0; i < boxWidth * boxWidth; i += boxWidth) {
+    var temp = puzzle[i + twoRandoms[0]];
     puzzle[i + twoRandoms[0]] = puzzle[i + twoRandoms[1]];
     puzzle[i + twoRandoms[1]] = temp;
   }
   return puzzle;
 }
 
-function returnTwoRandoms(range){//returns two randoms for use in swapping rows or columns of game board
-  let random1 = Math.floor(Math.random() * range);
-  let random2 = random1;
+function returnTwoRandoms(range) {//returns two randoms for use in swapping rows or columns of game board
+  var random1 = Math.floor(Math.random() * range);
+  var random2 = random1;
 
-  while(random1 === random2){
+  while (random1 === random2) {
     random2 = Math.floor(Math.random() * range);
   }
   return [random1, random2];
