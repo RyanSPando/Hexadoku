@@ -1,5 +1,7 @@
 $(document).on('ready', function() {
   console.log('listeners.css!');
+  //=========Board Objects=========
+  //creat objects to search for information content of cells based on number of values within contstraint space
 
   //=========Listeners=========
   //game cells start square
@@ -55,6 +57,20 @@ $(document).on('ready', function() {
     event.preventDefault();
     var $gameCellWithFocus = $('#game-board .game-cell:focus');
     $gameCellWithFocus.val('');
+  });
+
+  //cell background turns red if incorrect value is present.
+  $('.verify-input').on('click', function() {
+    for (var i = 0; i < stringifiedSolvedPuzzle.length; i++) {
+      var $gameCell = $('#game-board #' + i);
+      if(stringifiedSolvedPuzzle[i] !==  $gameCell.val() && $gameCell.val() !== ''){
+        $gameCell.css('background', 'red');
+      }
+      else {
+        $gameCell.css('background', 'white');
+      }
+    }
+
   });
 });
 

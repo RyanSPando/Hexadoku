@@ -1,7 +1,6 @@
-(function() {
-  'use strict';
+$(document).on('ready', function() {
 
-}());
+});
 
 var rowHeight = 16;
 var columnHeight = 16;
