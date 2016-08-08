@@ -28,7 +28,9 @@ $(document).on('ready', function() {
     $('#button-board').append('<button type="button" class="btn btn-default game-inputs">' + value + '</button>');
   });
 
-  $('#button-board .game-inputs').wrapAll('<div class="btn-group" role="group"></div>');
+  $('#button-board').append('<button type="button" class="btn btn-default erase-input btn-succsess">Erase</button>')
+
+  $('#button-board').children().wrapAll('<div class="btn-group" role="group"></div>');
 
   //=========Fill Game Board=========
   var solvedPuzzle = randomizeHexadoku(puzzleSeed, 4, 4);

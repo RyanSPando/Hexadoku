@@ -49,6 +49,13 @@ $(document).on('ready', function() {
       listenerGameBoard();
     }
   });
+
+  //delete value in cell on delete button push
+  $('#button-board .erase-input').on('mousedown', function(event) {
+    event.preventDefault();
+    var $gameCellWithFocus = $('#game-board .game-cell:focus');
+    $gameCellWithFocus.val('');
+  });
 });
 
 //prevents all characters other than hexadecimal characters from being placed in boxes and changes all inputs to upper case.  Fear the dreaded regex!
