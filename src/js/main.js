@@ -5,6 +5,11 @@ var stringifiedSolvedPuzzle = solvedPuzzle.toString().replace(/,/g, '');
 //mask puzzle
 var maskedPuzzle = maskPuzzle(solvedPuzzle, 200);
 
+var columnObjects = [];
+var rowObjects = [];
+var gridObjects = [];
+var cellObjects = [];
+
 $(document).on('ready', function() {
   console.log('main.css!');
 
@@ -16,10 +21,7 @@ $(document).on('ready', function() {
     }
   }
   //=========Create Objects=========
-  var columnObjects = [];
-  var rowObjects = [];
-  var gridObjects = [];
-  var cellObjects = [];
+
 
     for (var i = 0; i < 16; i++) {
       columnObjects[i] = new ColumnObject(i);
@@ -64,10 +66,34 @@ $(document).on('ready', function() {
   var stringifiedMaskedPuzzle = maskedPuzzle.toString().replace(/,/g, '');
   $('#game-board .game-cell').each(function(index, value) {
     if (stringifiedMaskedPuzzle[index] !== '*') {
-      this.value = stringifiedMaskedPuzzle[index];
+      $(this).attr('value', stringifiedMaskedPuzzle[index])
       $(this).attr('disabled', true);
       $(this).css('color', 'black');
+      this.value = stringifiedMaskedPuzzle[index];
     }
+  });
+
+  $('.easiest-input').on('click', function(event) {
+    event.preventDefault();
+    var nextEasiestSquare = 0;
+    var highestInfoSquare = 0;
+
+    for (var i = 0; i < cellObjects.length; i++) {
+      var individualCellArray = cellObjects[i].values
+      var infoSquares = 0;
+
+      for (var j = 0; j < individualCellArray.length; j++) {
+        if(individualCellArray[j].value !== ''){
+          infoSquares++;
+        }
+      }
+      if (infoSquares > highestInfoSquare && !$(individualCellArray[j]).prop('disabled')) {
+        highestInfoSquare = infoSquares;
+        nextEasiestSquare = i;
+      }
+    }
+    console.log(nextEasiestSquare, highestInfoSquare);
+    $('#' + nextEasiestSquare).focus();
   });
 });
 
@@ -85,21 +111,14 @@ function InnerGridObject(gridNumber) {
 }
 
 function CellObject(row, column, innerGrid) {
-  // console.log(row.values.concat(column.values).concat(innerGrid.values));
   var totalInfoSpace = $.merge([], row.values);
   totalInfoSpace = $.merge(totalInfoSpace, column.values);
   totalInfoSpace = $.merge(totalInfoSpace, innerGrid.values);
+  totalInfoSpace = $.merge([], totalInfoSpace);
   totalInfoSpace = totalInfoSpace.filter(onlyUnique);
   this.values = totalInfoSpace;
-  this.info = totalInfoSpace.filter(valueIsFilled);
-  console.log(totalInfoSpace.length);
 }
 
 function onlyUnique(value, index, self) {
     return self.lastIndexOf(value) === index;
-}
-
-function valueIsFilled(value, index) {
-  // console.log(value);
-  return false
 }

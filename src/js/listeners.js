@@ -1,7 +1,5 @@
 $(document).on('ready', function() {
   console.log('listeners.css!');
-  //=========Board Objects=========
-  //creat objects to search for information content of cells based on number of values within contstraint space
 
   //=========Listeners=========
   //game cells start square
@@ -18,7 +16,9 @@ $(document).on('ready', function() {
   //On button press puts text value of button on selected game board
   $('#button-board .game-inputs').on('mousedown', function(event) {
     event.preventDefault();
+    var $gameCellWithFocus = $('#game-board .game-cell:focus');
     $(document.activeElement).val($(this)[0].textContent);
+    $gameCellWithFocus.attr('value', $(this)[0].textContent);
   });
 
   //On arrow press the user can traverse the game board, skipping over disabled squares
@@ -27,7 +27,7 @@ $(document).on('ready', function() {
     var $gameCellWithFocus = $('#game-board .game-cell:focus');
 
     if (event.keyCode === 8 || event.keyCode === 46) {
-
+      $gameCellWithFocus.attr('value', '')
     }
     else if (event.keyCode === 37) {
       event.preventDefault();
@@ -57,11 +57,13 @@ $(document).on('ready', function() {
     event.preventDefault();
     var $gameCellWithFocus = $('#game-board .game-cell:focus');
     $gameCellWithFocus.val('');
+    $gameCellWithFocus.attr('value', "''")
   });
 
   //cell background turns red if incorrect value is present.
-  $('.verify-input').on('click', function() {
+  $('.verify-input').on('click', function(event) {
     for (var i = 0; i < stringifiedSolvedPuzzle.length; i++) {
+      event.preventDefault();
       var $gameCell = $('#game-board #' + i);
       if(stringifiedSolvedPuzzle[i] !==  $gameCell.val() && $gameCell.val() !== ''){
         $gameCell.css('background', 'red');
@@ -70,7 +72,6 @@ $(document).on('ready', function() {
         $gameCell.css('background', 'white');
       }
     }
-
   });
 });
 
@@ -86,5 +87,11 @@ function listenerGameBoard() {
     else if (null !== keyPressEvent.match(/[A-F]/g)) {
       event.preventDefault();
       $gameCellWithFocus.val(keyPressEvent.toUpperCase());
+      $gameCellWithFocus.attr('value', keyPressEvent.toUpperCase())
+    }
+    else if (null !== keyPressEvent.match(/[0-9]/g)) {
+      event.preventDefault();
+      $gameCellWithFocus.val(keyPressEvent);
+      $gameCellWithFocus.attr('value', keyPressEvent)
     }
 }
