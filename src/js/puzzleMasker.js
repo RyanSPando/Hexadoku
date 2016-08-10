@@ -20,5 +20,11 @@ function maskPuzzle(puzzleToMask, puzzleBlanks) {
     var puzzleIndexColumn = cellNumber % 16;
     puzzleToMask[puzzleIndexRow][puzzleIndexColumn] = '*' + puzzleToMask[puzzleIndexRow][puzzleIndexColumn] ;
   }
+  pickArray.forEach(function(value, index){
+    var puzzleIndexRow = Math.floor(value / 16);
+    var puzzleIndexColumn = value % 16;
+    puzzleToMask[puzzleIndexRow][puzzleIndexColumn] = '-' + puzzleToMask[puzzleIndexRow][puzzleIndexColumn] ;
+  });
+  console.log(puzzleToMask);
   return puzzleToMask;
 }
