@@ -1,10 +1,8 @@
 //make puzzle
 var solvedPuzzle = randomizeHexadoku(puzzleSeed, 4, 4);
-//save a copy of solved puzzle stringified
-var stringifiedSolvedPuzzle = solvedPuzzle.toString().replace(/,/g, '');
-//mask puzzle
 var maskedPuzzle = maskPuzzle(solvedPuzzle, 200);
 
+//declare arrays for Board Objects
 var columnObjects = [];
 var rowObjects = [];
 var gridObjects = [];
@@ -22,7 +20,7 @@ $(document).on('ready', function() {
   }
   //=========Create Objects=========
 
-
+    gameBoardObject = new GameBoard();
     for (var i = 0; i < 16; i++) {
       columnObjects[i] = new ColumnObject(i);
       rowObjects[i] = new RowObject(i);
@@ -35,6 +33,8 @@ $(document).on('ready', function() {
         cellObjects[(i * 16 + j)] = new CellObject(rowObjects[i], columnObjects[j], gridObjects[gridClassNumber2]);
       }
     }
+
+    console.log(cellObjects[0]);
 
   //=========Make inner 8 x 8 grids for puzzle=========;
 
@@ -61,18 +61,10 @@ $(document).on('ready', function() {
 
   $('#button-board').children().wrapAll('<div class="btn-group" role="group"></div>');
 
-  //=========Fill Game Board=========
-  //Place puzzle on board and set cells to disabled
-  var stringifiedMaskedPuzzle = maskedPuzzle.toString().replace(/,/g, '');
-  $('#game-board .game-cell').each(function(index, value) {
-    if (stringifiedMaskedPuzzle[index] !== '*') {
-      $(this).attr('value', stringifiedMaskedPuzzle[index])
-      $(this).attr('disabled', true);
-      $(this).css('color', 'black');
-      this.value = stringifiedMaskedPuzzle[index];
-    }
-  });
+//fill game button-board
 
+
+//finds the next easiest square
   $('.easiest-input').on('click', function(event) {
     event.preventDefault();
     var nextEasiestSquare = 0;
@@ -87,13 +79,36 @@ $(document).on('ready', function() {
           infoSquares++;
         }
       }
-      if (infoSquares > highestInfoSquare && !$(individualCellArray[j]).prop('disabled')) {
+      if (infoSquares > highestInfoSquare && !$(individualCellArray[j]).prop('disabled') && $('#' + i).val() === '') {
         highestInfoSquare = infoSquares;
         nextEasiestSquare = i;
       }
     }
     console.log(nextEasiestSquare, highestInfoSquare);
     $('#' + nextEasiestSquare).focus();
+  });
+
+  $('.save-input').on('click', function(event) {
+    event.preventDefault();
+    var savePuzzle = generateStringifiedGameBoard(gameBoardObject, stringifiedSolvedPuzzle)
+    // writeGameData(stringifiedCurrentGameBoard, uid);
+    console.log(savePuzzle);
+  });
+
+  $('.load-input').on('click', function(event) {
+    event.preventDefault();
+    // writeGameData(stringifiedCurrentGameBoard, uid);
+  });
+
+  $('#googleLogin a').on('click', function(event) {
+    event.preventDefault();
+    var auth = firebase.auth();
+    var provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider).then(function(result) {
+      // User signed in!
+    }).catch(function(error) {
+      console.log('Error');
+    });
   });
 });
 
@@ -119,6 +134,61 @@ function CellObject(row, column, innerGrid) {
   this.values = totalInfoSpace;
 }
 
+function GameBoard(){
+  this.values = $('.game-cell');
+}
+
 function onlyUnique(value, index, self) {
     return self.lastIndexOf(value) === index;
+}
+
+function writeGameData(gameData) {
+  var userId = firebase.auth().currentUser.uid;
+  firebase.database().ref('web/data/users/' + userID).set({
+    saveGame: gameData
+  });
+}
+
+function retrieveGameData() {
+  var userId = firebase.auth().currentUser.uid;
+  return firebase.database().ref('/users/' + userId).once('gameData').then(function(snapshot) {
+
+  });
+}
+
+function generateStringifiedGameBoard(gameBoardObject, stringifiedSolvedPuzzle) {
+  var stringifiedCurrentGameBoard = '';
+  currentGameBoard = gameBoardObject.values.each((index,value) => {
+    if ($(value).val() === '') {
+      stringifiedCurrentGameBoard += ('*' + stringifiedSolvedPuzzle[index]);
+    }
+    else if ($(value).prop('disabled')) {
+      stringifiedCurrentGameBoard += ('-' + stringifiedSolvedPuzzle[index]);
+    }
+    else {
+      stringifiedCurrentGameBoard += $(value).val();
+    }
+  });
+  return stringifiedCurrentGameBoard;
+}
+
+function makeGameBoard(puzzleString) {
+  $('#game-board .game-cell').each(function(index, value) {
+    if (puzzleString[index] === '*') {
+      $(this).attr('value', '')
+      this.value = '';
+      index++;
+    }
+    else if (puzzleString[index] === '-') {
+      $(this).attr('value', puzzleString[index])
+      $(this).attr('disabled', true);
+      $(this).css('color', 'black');
+      this.value = puzzleString[index + 1];
+      index++;
+    }
+    else{
+        $(this).attr('value', puzzleString[index])
+        this.value = puzzleString[index];
+    }
+  });
 }

@@ -2,7 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Untitled</title>
+    <meta name="google-signin-client_id" content="317178463805-543adg21u2n1gdpj9n839sd5oofthpp5.apps.googleusercontent.com">
+    <title>Hexadoku-Fully-Loaded</title>
     <!-- styles -->
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/darkly/bootstrap.min.css" rel="stylesheet" integrity="sha384-S7YMK1xjUjSpEnF4P8hPUcgjXYLZKK3fQW1j5ObLSl787II9p8RO9XUGehRmKsxd" crossorigin="anonymous">
@@ -25,9 +26,14 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="nav-collapse">
           <ul class="nav navbar-nav">
-            <li class="navbar-right">
-              <a href="https://github.com/archaen/Hexadoku">
+            <li class="navbar-left">
+              <a href="https://github.com/archaen/Hexadoku">View Project on Github
                 <img src="assets/GitHub-Mark-32px.png" alt="GitHub" />
+              </a>
+            </li>
+            <li class='navbar-right' id="googleLogin">
+              <a href='*'>Sign In with Google
+                <img src="assets/README.png">
               </a>
             </li>
           </ul>
@@ -54,6 +60,17 @@
     <!-- scripts -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.2.1/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyB1zwX1XpX12KOyfNquL0LDSWu6oNqowW8",
+        authDomain: "hexadoku-fully-loaded.firebaseapp.com",
+        databaseURL: "https://hexadoku-fully-loaded.firebaseio.com",
+        storageBucket: "hexadoku-fully-loaded.appspot.com",
+      };
+      firebase.initializeApp(config);
+    </script>
     <script type="text/javascript" src="js/puzzleCreator.js"></script>
     <script type="text/javascript" src="js/puzzleMasker.js"></script>
     <script type="text/javascript" src="js/main.js"></script>

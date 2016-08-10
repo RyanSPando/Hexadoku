@@ -18,7 +18,7 @@ function maskPuzzle(puzzleToMask, puzzleBlanks) {
     var cellNumber = pickArray.splice(toRemoveIndex, 1);
     var puzzleIndexRow = Math.floor(cellNumber / 16);
     var puzzleIndexColumn = cellNumber % 16;
-    puzzleToMask[puzzleIndexRow][puzzleIndexColumn] = '*';
+    puzzleToMask[puzzleIndexRow][puzzleIndexColumn] = '*' + puzzleToMask[puzzleIndexRow][puzzleIndexColumn] ;
   }
   return puzzleToMask;
 }
