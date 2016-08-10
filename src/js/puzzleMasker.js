@@ -1,32 +1,26 @@
 $(document).on('ready', function() {
 
 });
-
-var rowHeight = 16;
-var columnHeight = 16;
-
+//formats solved puzzle to be read by fill game board function
 function maskPuzzle(puzzleToMask, puzzleBlanks) {
   //make a basket to pick values out of
   var pickArray = [];
   for (var i = 0; i < rowHeight * columnHeight; i++) {
     pickArray.push(i);
   }
-
-  //use string instead of array?
+  puzzleToMask = puzzleToMask.split('');
 
   for (var j = 0; j < puzzleBlanks; j++) {
     //generate a random number that hasn't been picked already
     var toRemoveIndex = Math.floor(Math.random() * pickArray.length);
-    var cellNumber = pickArray.splice(toRemoveIndex, 1);
-    var puzzleIndexRow = Math.floor(cellNumber / 16);
-    var puzzleIndexColumn = cellNumber % 16;
-    puzzleToMask[puzzleIndexRow][puzzleIndexColumn] = '*' + puzzleToMask[puzzleIndexRow][puzzleIndexColumn] ;
+    var toRemoveIndexNumber = pickArray.splice(toRemoveIndex, 1);
+    //assign * in front of cell value to not be displayed
+    puzzleToMask[toRemoveIndexNumber] = ('*' + puzzleToMask[toRemoveIndexNumber]);
   }
-  pickArray.forEach(function(value, index){
-    var puzzleIndexRow = Math.floor(value / 16);
-    var puzzleIndexColumn = value % 16;
-    puzzleToMask[puzzleIndexRow][puzzleIndexColumn] = '-' + puzzleToMask[puzzleIndexRow][puzzleIndexColumn] ;
+  pickArray.forEach(function(knownValue, index){
+    //assign - in front of cell value to be displayed on load
+    puzzleToMask[knownValue] = ('-' + puzzleToMask[knownValue]);
+
   });
-  console.log(puzzleToMask);
-  return puzzleToMask;
+  return puzzleToMask.toString().replace(/,/g, '');
 }

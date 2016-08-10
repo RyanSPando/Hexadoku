@@ -13,10 +13,9 @@ function writeGameData(gameData) {
 function retrieveGameData() {
   var userId = firebase.auth().currentUser.uid;
   return firebase.database().ref('/users/' + userId).once('gameData').then(function(snapshot) {
-
   });
 }
-//makes a copy of the gameboard and
+//makes a copy of the gameboard and puts it into a string for storage on save
 function generateStringifiedGameBoard(gameBoardObject, stringifiedSolvedPuzzle) {
   var stringifiedCurrentGameBoard = '';
   currentGameBoard = gameBoardObject.values.each((index,value) => {
@@ -33,24 +32,28 @@ function generateStringifiedGameBoard(gameBoardObject, stringifiedSolvedPuzzle) 
   return stringifiedCurrentGameBoard;
 }
 
+
 //take a stringified puzzle and applies it to the gameboard
 function fillGameBoard(puzzleString) {
+  count = 0;
   $('#game-board .game-cell').each(function(index, value) {
-    if (puzzleString[index] === '*') {
+
+    if (puzzleString[count] === '*') {
       $(this).attr('value', '')
       this.value = '';
-      index++;
+      count += 2;
     }
-    else if (puzzleString[index] === '-') {
-      $(this).attr('value', puzzleString[index])
+    else if (puzzleString[count] === '-') {
+      $(this).attr('value', puzzleString[count])
       $(this).attr('disabled', true);
       $(this).css('color', 'black');
-      this.value = puzzleString[index + 1];
-      index++;
+      this.value = puzzleString[count + 1];
+      count += 2;
     }
     else{
-        $(this).attr('value', puzzleString[index])
-        this.value = puzzleString[index];
+        $(this).attr('value', puzzleString[count])
+        this.value = puzzleString[count];
+        count++;
     }
   });
 }
