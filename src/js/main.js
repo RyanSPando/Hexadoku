@@ -12,6 +12,7 @@ $(document).on('ready', function() {
   console.log('main.css!');
 
   //=========Create Game Board=========
+
   for (var i = 0; i < 16; i++) {
     for (var j = 0; j < 16; j++) {
       var gridClassNumber1 = Math.floor( i / 4 ) * 4 + Math.floor( j / 4)
@@ -63,12 +64,15 @@ $(document).on('ready', function() {
 
 //fill game button-board
 
+//event handlers in separate file?
 
 //finds the next easiest square
   $('.easiest-input').on('click', function(event) {
     event.preventDefault();
     var nextEasiestSquare = 0;
     var highestInfoSquare = 0;
+
+    //refactored into .Each for these?
 
     for (var i = 0; i < cellObjects.length; i++) {
       var individualCellArray = cellObjects[i].values
@@ -112,6 +116,7 @@ $(document).on('ready', function() {
   });
 });
 
+//put these in separate file?
 //Objects for finder
 function RowObject(rowNumber) {
   this.values = $('.row' + rowNumber);
@@ -136,59 +141,4 @@ function CellObject(row, column, innerGrid) {
 
 function GameBoard(){
   this.values = $('.game-cell');
-}
-
-function onlyUnique(value, index, self) {
-    return self.lastIndexOf(value) === index;
-}
-
-function writeGameData(gameData) {
-  var userId = firebase.auth().currentUser.uid;
-  firebase.database().ref('web/data/users/' + userID).set({
-    saveGame: gameData
-  });
-}
-
-function retrieveGameData() {
-  var userId = firebase.auth().currentUser.uid;
-  return firebase.database().ref('/users/' + userId).once('gameData').then(function(snapshot) {
-
-  });
-}
-
-function generateStringifiedGameBoard(gameBoardObject, stringifiedSolvedPuzzle) {
-  var stringifiedCurrentGameBoard = '';
-  currentGameBoard = gameBoardObject.values.each((index,value) => {
-    if ($(value).val() === '') {
-      stringifiedCurrentGameBoard += ('*' + stringifiedSolvedPuzzle[index]);
-    }
-    else if ($(value).prop('disabled')) {
-      stringifiedCurrentGameBoard += ('-' + stringifiedSolvedPuzzle[index]);
-    }
-    else {
-      stringifiedCurrentGameBoard += $(value).val();
-    }
-  });
-  return stringifiedCurrentGameBoard;
-}
-
-function makeGameBoard(puzzleString) {
-  $('#game-board .game-cell').each(function(index, value) {
-    if (puzzleString[index] === '*') {
-      $(this).attr('value', '')
-      this.value = '';
-      index++;
-    }
-    else if (puzzleString[index] === '-') {
-      $(this).attr('value', puzzleString[index])
-      $(this).attr('disabled', true);
-      $(this).css('color', 'black');
-      this.value = puzzleString[index + 1];
-      index++;
-    }
-    else{
-        $(this).attr('value', puzzleString[index])
-        this.value = puzzleString[index];
-    }
-  });
 }

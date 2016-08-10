@@ -12,6 +12,8 @@ function maskPuzzle(puzzleToMask, puzzleBlanks) {
     pickArray.push(i);
   }
 
+  //use string instead of array?
+
   for (var j = 0; j < puzzleBlanks; j++) {
     //generate a random number that hasn't been picked already
     var toRemoveIndex = Math.floor(Math.random() * pickArray.length);
