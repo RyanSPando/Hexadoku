@@ -14,10 +14,9 @@ function maskPuzzle(puzzleToMask, puzzleBlanks) {
     //generate a random number that hasn't been picked already
     var toRemoveIndex = Math.floor(Math.random() * pickArray.length);
     var toRemoveIndexNumber = pickArray.splice(toRemoveIndex, 1);
-    //assign * in front of cell value to not be displayed
-    puzzleToMask[toRemoveIndexNumber] = ('*' + puzzleToMask[toRemoveIndexNumber]);
+    puzzleToMask[toRemoveIndexNumber] = '*';
   }
-  pickArray.forEach(function(knownValue, index){
+  pickArray.forEach(function(knownValue, index) {
     //assign - in front of cell value to be displayed on load
     puzzleToMask[knownValue] = ('-' + puzzleToMask[knownValue]);
 

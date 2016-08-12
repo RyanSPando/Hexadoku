@@ -1,28 +1,37 @@
 //filter function to get unique values in the array
 function onlyUnique(value, index, self) {
-    return self.lastIndexOf(value) === index;
+  return self.lastIndexOf(value) === index;
 }
+
 //write game data to firebase database
-function writeGameData(gameData) {
-  var userId = firebase.auth().currentUser.uid;
+function writeGameData(gameData, solvedBoard) {
+  var userID = firebase.auth().currentUser.uid;
+
   firebase.database().ref('web/data/users/' + userID).set({
-    saveGame: gameData
+    saveGame: gameData,
+    solvedBoard: solvedBoard
   });
 }
-//grab save game data
+
+//grab save game data from firebase database
 function retrieveGameData() {
-  var userId = firebase.auth().currentUser.uid;
-  return firebase.database().ref('/users/' + userId).once('gameData').then(function(snapshot) {
+  var userID = firebase.auth().currentUser.uid;
+
+  return firebase.database().ref('/web/data/users/' + userID).once('value').then(function(snapshot) {
+    fillGameBoard(snapshot.val().saveGame);
+    stringifiedSolvedPuzzle = snapshot.val().solvedBoard;
   });
 }
+
 //makes a copy of the gameboard and puts it into a string for storage on save
 function generateStringifiedGameBoard(gameBoardObject, stringifiedSolvedPuzzle) {
   var stringifiedCurrentGameBoard = '';
-  currentGameBoard = gameBoardObject.values.each((index,value) => {
+
+  currentGameBoard = gameBoardObject.values.each(function(index,value) {
     if ($(value).val() === '') {
-      stringifiedCurrentGameBoard += ('*' + stringifiedSolvedPuzzle[index]);
+      stringifiedCurrentGameBoard += '*';
     }
-    else if ($(value).prop('disabled')) {
+    else if ($(value).attr('disabled')) {
       stringifiedCurrentGameBoard += ('-' + stringifiedSolvedPuzzle[index]);
     }
     else {
@@ -32,28 +41,35 @@ function generateStringifiedGameBoard(gameBoardObject, stringifiedSolvedPuzzle) 
   return stringifiedCurrentGameBoard;
 }
 
+//changes color of back ground when an 8 space column or row is filled
 
 //take a stringified puzzle and applies it to the gameboard
 function fillGameBoard(puzzleString) {
   count = 0;
   $('#game-board .game-cell').each(function(index, value) {
 
+    $(this).prop('disabled', false);//reset disabled squares for load game
+    $(this).css('color', 'blue');//reset for load game
     if (puzzleString[count] === '*') {
-      $(this).attr('value', '')
+      $(this).attr('value', '');
       this.value = '';
-      count += 2;
+      count++;
     }
     else if (puzzleString[count] === '-') {
-      $(this).attr('value', puzzleString[count])
-      $(this).attr('disabled', true);
+      $(this).attr('value', puzzleString[count]);
+      $(this).prop('disabled', true);
       $(this).css('color', 'black');
       this.value = puzzleString[count + 1];
       count += 2;
     }
-    else{
-        $(this).attr('value', puzzleString[count])
-        this.value = puzzleString[count];
-        count++;
+    else {
+      $(this).attr('value', puzzleString[count]);
+      this.value = puzzleString[count];
+      count++;
     }
   });
+}
+//gives the inner grid number based on index of cell
+function gridClassNumber(outerIndex, innerIndex) {
+  return (Math.floor(outerIndex / boxHeight) * boxHeight + Math.floor(innerIndex / boxWidth));
 }

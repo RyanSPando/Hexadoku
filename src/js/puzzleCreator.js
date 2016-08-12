@@ -1,5 +1,3 @@
-var boxHeight = 4;
-var boxWidth = 4;
 var puzzleSeed =
   [
     ['B',	5, 'E', 'F', 8,	4, 'C', 9, 1,	0, 3, 6, 'A',	7, 2, 'D'],

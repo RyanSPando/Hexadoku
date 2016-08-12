@@ -1,8 +1,11 @@
-const rowHeight = 16;
-const columnHeight = 16;
+//constants for Hexadoku, change if a different size game is needed
+var rowHeight = 16;
+var columnHeight = 16;
+var boxHeight = 4;
+var boxWidth = 4;
 
 //make puzzle
-var solvedPuzzle = randomizeHexadoku(puzzleSeed, 4, 4);
+var solvedPuzzle = randomizeHexadoku(puzzleSeed, boxHeight, boxWidth);
 var stringifiedSolvedPuzzle = solvedPuzzle.toString().replace(/,/g, '');
 var maskedPuzzle = maskPuzzle(stringifiedSolvedPuzzle, 200);
 
@@ -13,38 +16,37 @@ var gridObjects = [];
 var cellObjects = [];
 
 $(document).on('ready', function() {
-  console.log('main.css!');
 
   //=========Create Game Board=========
-  for (let i = 0; i < 16; i++) {
-    for (let j = 0; j < 16; j++) {
-      var gridClassNumber1 = Math.floor( i / 4 ) * 4 + Math.floor( j / 4)
-      $('#game-board').append('<input type="text" id="' + (i * 16 + j) + '" value="" class="game-cell grid' + gridClassNumber1 + ' row' + i + ' column' + j + '" maxlength="1">');
+  for (var i = 0; i < rowHeight; i++) {
+    for (var j = 0; j < columnHeight; j++) {
+      var gridClassNumber1 = gridClassNumber(i,j);
+      $('#game-board').append('<input type="text" id="' + (i * rowHeight + j) + '" value="" class="game-cell grid' + gridClassNumber1 + ' row' + i + ' column' + j + '" maxlength="1">');
     }
   }
   //=========Fill Board=============
   fillGameBoard(maskedPuzzle);
 
   //=========Create Objects=========
-    gameBoardObject = new GameBoard();
-    for (let i = 0; i < 16; i++) {
-      columnObjects[i] = new ColumnObject(i);
-      rowObjects[i] = new RowObject(i);
-      gridObjects[i] = new InnerGridObject(i);
-    }
+  gameBoardObject = new GameBoard();
+  for (var x = 0; x < 16; x++) {
+    columnObjects[x] = new ColumnObject(x);
+    rowObjects[x] = new RowObject(x);
+    gridObjects[x] = new InnerGridObject(x);
+  }
 
-    for (let i = 0; i < 16; i++) {
-      for (let j = 0; j < 16; j++) {
-        var gridClassNumber2 = Math.floor( i / 4 ) * 4 + Math.floor( j / 4);
-        cellObjects[(i * 16 + j)] = new CellObject(rowObjects[i], columnObjects[j], gridObjects[gridClassNumber2]);
-      }
+  for (var y = 0; y < rowHeight; y++) {
+    for (var z = 0; z < columnHeight; z++) {
+      var gridClassNumber2 = gridClassNumber(y,z);
+      cellObjects[(y * rowHeight + z)] = new CellObject(rowObjects[y], columnObjects[z], gridObjects[gridClassNumber2]);
     }
+  }
 
   //=========Make inner 8 x 8 grids for puzzle=========;
   $('#game-board .game-cell').each(function(index, value) {
     index += 1;
 
-    if (index % 4 === 0 && index % 16 !== 0) { //Right borders.
+    if (index % boxWidth === 0 && index % rowHeight !== 0) { //Right borders.
       $(value).css('border-right', 'blue solid 3px');
     }
     //Ugly but works.  *Refactor if you have time.  Bottom borders.

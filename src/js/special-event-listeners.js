@@ -6,14 +6,12 @@ $(document).on('ready', function() {
     var nextEasiestSquare = 0;
     var highestInfoSquare = 0;
 
-    //refactored into .each for these?  jQuery objects do not like each.
-
     for (var i = 0; i < cellObjects.length; i++) {
-      var individualCellArray = cellObjects[i].values
+      var individualCellArray = cellObjects[i].values;
       var infoSquares = 0;
 
       for (var j = 0; j < individualCellArray.length; j++) {
-        if(individualCellArray[j].value !== ''){
+        if (individualCellArray[j].value !== '') {
           infoSquares++;
         }
       }
@@ -22,22 +20,23 @@ $(document).on('ready', function() {
         nextEasiestSquare = i;
       }
     }
-    console.log(nextEasiestSquare, highestInfoSquare);
     $('#' + nextEasiestSquare).focus();
   });
 
+  //save game to Firebase database
   $('.save-input').on('click', function(event) {
     event.preventDefault();
-    var savePuzzle = generateStringifiedGameBoard(gameBoardObject, stringifiedSolvedPuzzle)
-    // writeGameData(stringifiedCurrentGameBoard, uid);
-    console.log(savePuzzle);
+    var savePuzzle = generateStringifiedGameBoard(gameBoardObject, stringifiedSolvedPuzzle);
+    writeGameData(savePuzzle, stringifiedSolvedPuzzle);
   });
 
+  //load game to firebase database
   $('.load-input').on('click', function(event) {
     event.preventDefault();
-    // writeGameData(stringifiedCurrentGameBoard, uid);
+    retrieveGameData();
   });
 
+  //login using Google ID for save and load game
   $('#googleLogin a').on('click', function(event) {
     event.preventDefault();
     var auth = firebase.auth();
@@ -47,5 +46,9 @@ $(document).on('ready', function() {
     }).catch(function(error) {
       console.log('Error');
     });
+  });
+  //on change of board look for a complete 8 digit row column or row and change the background color to it
+  $('.input').change(function(event) {
+    console.log('hello');
   });
 });

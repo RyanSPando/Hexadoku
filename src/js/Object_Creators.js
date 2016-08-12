@@ -20,6 +20,6 @@ function CellObject(row, column, innerGrid) {
   this.values = totalInfoSpace;
 }
 
-function GameBoard(){
+function GameBoard() {
   this.values = $('.game-cell');
 }
