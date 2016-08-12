@@ -95,27 +95,27 @@ function listenerGameBoard() {
   }
 }
 
-function colorChange() {
-  //get numbers index of object arrays for column and row of selected cell
-  var columnNum = $gameCellWithFocus.attr('class').split(' ')[3].slice(-1);
-  var rowNum = $gameCellWithFocus.attr('class').split(' ')[2].slice(-1);
-  var checkArray = [];
-  var columnObjectValuesArray = columnObjects[columnNum].values;
-  var stop, start;
-  //grab front or rear section of column object depending where cell lies
-  if (rowNum < 8) {
-    start = 0;
-    stop = 8;
-  }
-  else {
-    start = 8;
-    stop = 16;
-  }
-  console.log(start, stop);
-  for (var i = start; i < stop; i++) {
-
-    checkArray.push($(columnObjectValuesArray[i]).val());
-  }
-
-  console.log(checkArray);
-}
+// function colorChange() {
+//   //get numbers index of object arrays for column and row of selected cell
+//   var columnNum = $gameCellWithFocus.attr('class').split(' ')[3].slice(-1);
+//   var rowNum = $gameCellWithFocus.attr('class').split(' ')[2].slice(-1);
+//   var checkArray = [];
+//   var columnObjectValuesArray = columnObjects[columnNum].values;
+//   var stop, start;
+//   //grab front or rear section of column object depending where cell lies
+//   if (rowNum < 8) {
+//     start = 0;
+//     stop = 8;
+//   }
+//   else {
+//     start = 8;
+//     stop = 16;
+//   }
+//   console.log(start, stop);
+//   for (var i = start; i < stop; i++) {
+//
+//     checkArray.push($(columnObjectValuesArray[i]).val());
+//   }
+// 
+//   console.log(checkArray);
+// }
