@@ -41,7 +41,7 @@ $(document).on('ready', function() {
       cellObjects[(y * rowHeight + z)] = new CellObject(rowObjects[y], columnObjects[z], gridObjects[gridClassNumber2]);
     }
   }
-
+  console.log(cellObjects[0]);
   //=========Make inner 8 x 8 grids for puzzle=========;
   $('#game-board .game-cell').each(function(index, value) {
     index += 1;

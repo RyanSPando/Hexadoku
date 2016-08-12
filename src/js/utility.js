@@ -41,8 +41,6 @@ function generateStringifiedGameBoard(gameBoardObject, stringifiedSolvedPuzzle) 
   return stringifiedCurrentGameBoard;
 }
 
-//changes color of back ground when an 8 space column or row is filled
-
 //take a stringified puzzle and applies it to the gameboard
 function fillGameBoard(puzzleString) {
   count = 0;
@@ -69,6 +67,7 @@ function fillGameBoard(puzzleString) {
     }
   });
 }
+
 //gives the inner grid number based on index of cell
 function gridClassNumber(outerIndex, innerIndex) {
   return (Math.floor(outerIndex / boxHeight) * boxHeight + Math.floor(innerIndex / boxWidth));

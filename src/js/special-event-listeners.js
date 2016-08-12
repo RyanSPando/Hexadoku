@@ -28,6 +28,7 @@ $(document).on('ready', function() {
     event.preventDefault();
     var savePuzzle = generateStringifiedGameBoard(gameBoardObject, stringifiedSolvedPuzzle);
     writeGameData(savePuzzle, stringifiedSolvedPuzzle);
+    console.log(savePuzzle);
   });
 
   //load game to firebase database
@@ -47,8 +48,9 @@ $(document).on('ready', function() {
       console.log('Error');
     });
   });
+
   //on change of board look for a complete 8 digit row column or row and change the background color to it
-  $('.input').change(function(event) {
-    console.log('hello');
-  });
+  // $('.input').change(function(event) {
+  //   console.log('hello');
+  // });
 });
