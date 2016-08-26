@@ -33,7 +33,7 @@
             </li>
             <li class='navbar-right' id="googleLogin">
               <a href='*'>Sign In with Google
-                <img src="assets/README.png">
+                <img src="assets/README.png" alt="google">
               </a>
             </li>
           </ul>
@@ -41,21 +41,21 @@
       </div><!-- /.container-fluid -->
     </nav>
 
-  <div class="container-fluid">
-    <div class="form-group" id="game-board">
+    <div class="container-fluid" id="colorTarget">
+      <div class="form-group" id="game-board">
+      </div>
     </div>
-  </div>
-  <div class="text-center">
-    <div class="row" id="button-board">
+    <div class="text-center">
+      <div class="row" id="button-board">
+      </div>
+      <div class="row" id="button-save">
+        <button type="button" class="btn btn-default save-input btn-info">Save Game</button>
+        <button type="button" class="btn btn-default load-input btn-warning">Load Game</button>
+        <div class="clearfix visible-xs-block"></div>
+        <button type="button" class="btn btn-default verify-input btn-primary">Verify Board</button>
+        <button type="button" class="btn btn-default easiest-input btn-danger">Next Easiest</button>
+      </div>
     </div>
-    <div class="row" id="button-save">
-      <button type="button" class="btn btn-default save-input btn-info">Save Game</button>
-      <button type="button" class="btn btn-default load-input btn-warning">Load Game</button>
-      <div class="clearfix visible-xs-block"></div>
-      <button type="button" class="btn btn-default verify-input btn-primary">Verify Board</button>
-      <button type="button" class="btn btn-default easiest-input btn-danger">Next Easiest</button>
-    </div>
-  </div>
 
     <!-- scripts -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
