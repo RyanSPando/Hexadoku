@@ -52,4 +52,4 @@ $(document).on('ready', function() {
 //   $('.input').change(function(event) {
 //     console.log('hello');
 //   });
-// });
+});
